@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Bringing the Future with Promises, pt. I</title>
+
+    <meta name="description"
+      content="A slide deck for my presentation introducing promises computation model with
+      examples in JavaScript">
+		<meta name="author" content="Artur Nowak">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/night.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+			<div class="slides">
+
+        <section>
+          <h2>Bringing the Future with Promises, pt. I</h2>
+          <h3>with examples in when.js</h3>
+					<p>
+            Artur Nowak<br>
+            <img src="img/logo.png" style="background: none; border: none;"><br>
+          </p>
+          <p>
+						The slide deck is accessible at 
+            <a href="http://synaway.github.com/bringing-the-future-with-promises">
+            http://synaway.github.com/bringing-the-future-with-promises</a>
+            <small>(source at <a href="http://github.com/synaway/bringing-the-future-with-promises">
+              http://github.com/synaway/bringing-the-future-with-promises</a>)
+            </small>
+					</p>
+          <aside class="notes">2</aside>
+				</section>
+
+        <section>
+          <h2>The agenda</h2>
+          <ul>
+            <li class="fragment">The rationale</li>
+            <li class="fragment">Promises 101</li>
+            <li class="fragment">Common.js Promises/A &amp; Promises/A+</li>
+            <li class="fragment">Promises in jQuery</li>
+            <li class="fragment">Testing</li>
+            <li class="fragment">Extensions and utils brought by when.js</li>
+            <li class="fragment">Picking your promises implementation</li>
+          </ul>
+          <aside class="notes">7</aside>
+        </section>
+
+        <section>
+          <h2>The rationale</h2>
+          <ul>
+            <li class="fragment">Applications in JavaScript are highly asynchronous</li>
+            <li class="fragment">Relaying only on callbacks quickly lead to
+              <a href="http://callbackhell.com/">Callback hell</a></li>
+            <li class="fragment">Error handling tends to violate DRY and is hard to trace</li>
+            <li class="fragment">There is a strong need for a model that is easy to reason
+            about</li>
+          </ul>
+          <aside class="notes">12</aside>
+        </section>
+
+        <section>
+          <h2>Promises 101</h2>
+          <li class="fragment">
+            A promise represents the eventual value returned from the single completion of an
+            operation.
+          </li>
+          <li class="fragment">A promise may be in one of the three states, unfulfilled, fulfilled,
+            and failed</li>
+          <li class="fragment">Has
+            <code>then(fulfilledHandler, errorHandler, progressHandler)</code> function</li>
+          <aside class="notes">20</aside>
+        </section>
+
+        <section>
+          <h2>Common.js <a href="http://wiki.commonjs.org/wiki/Promises/A">Promises/A</a></h2>
+          <li class="fragment">One of the proposals for the promises specification</li>
+          <li class="fragment">Defines promise as the object with properties from the previous
+          slide (and few others, like progress handling)</li>
+          <li class="fragment">The most widespread in terms of implementation</li>
+          <li class="fragment">Does not specify how promises are constructed</li>
+          <li class="fragment">Easy to reason about because of similarity to <code>try/catch</code>
+          blocks</li>
+          <aside class="notes">23</aside>
+        </section>
+
+        <section>
+          <h2><a href="http://promises-aplus.github.io/promises-spec/">Promises/A+</a></h2>
+          <li class="fragment">Removes some details e.g. about interactive promises and
+          progress notifications</li>
+          <li class="fragment">Does not specify how promises are constructed</li>
+          <li class="fragment">Adds semantics for returning promises in the callbacks</li>
+          <aside class="notes">30</aside>
+        </section>
+
+        <section>
+          <h2>Promises in jQuery</h2>
+          <li class="fragment"><strong>Not</strong> compatible with Promise/A!</li>
+          <li class="fragment">
+          <a href="http://blog.parse.com/2013/01/29/whats-so-great-about-javascript-promises/">
+            Parse.com blog</a> for an example</li>
+          <li class="fragment">All popular promises implementations offer some way of converting
+          jQuery promises to 'trusted' ones</li>
+        </section>
+
+        <section>
+          <h2><a href="https://github.com/cujojs/when">When.js</a></h2>
+          <li class="fragment">Promise creation</li>
+          <li class="fragment">Deferreds</li>
+          <li class="fragment"><code>ensure()</code></li>
+          <li class="fragment"><code>notify()</code></li>
+          <li class="fragment"><code>all()</code></li>
+          <li class="fragment"><code>map()</code> &amp; <code>reduce()</code></li>
+          <li class="fragment"><code>sequence()</code></li>
+          <li class="fragment"><code>any()</code></li>
+        </section>
+
+        <section>
+          <h2><a href="https://github.com/cujojs/when">When.js</a> continued</h2>
+          <li class="fragment"><code>timeout()</code></li>
+          <li class="fragment"><code>poll()</code></li>
+          <li class="fragment"><code>guard()</code></li>
+          <li class="fragment"><code>nodefn.call()</code></li>
+        </section>
+
+        <section>
+          <h2>Testing</h2>
+          <li class="fragment">chai-as-promised</li>
+          <li class="fragment">mocha-as-promised</li>
+        </section>
+
+        <section>
+          <h2>Picking promises implementaion</h2>
+          <li class="fragment">Sometimes comes with the framework: Angular.js features a clone of
+          Q.js</li>
+          <li class="fragment">How many features do you need?</li>
+          <li class="fragment">Performance and quality of benchmarks (when.js shines here)</li>
+          <li class="fragment">Environment and build process (when.js exposes its parts as modules,
+          no 'one file to rule them all')</li>
+        </section>
+
+        <section>
+          <h1>Q & A</h1>
+        </section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+
+				theme: Reveal.getQueryHash().theme,
+				transition: Reveal.getQueryHash().transition || 'default',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; }},
+					{ src: 'plugin/markdown/showdown.js',
+            condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js',
+            condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true,
+            callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true,
+            condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true,
+            condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
